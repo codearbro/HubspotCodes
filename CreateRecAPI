@@ -1,0 +1,106 @@
+const axios = require('axios');
+ 
+function main()
+{
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://accounts.zoho.com.au/oauth/v2/token?refresh_token=1000.0917e1c84698d87433920526f617c625.90962d9db7ff389c0b1e5b2b38eeeed5&client_id=1000.124ETZGHQ21QIIYOJH4T3JSA31C5KD&client_secret=ba9b2ece26fc20a071d591ccb58238d34d9276ba68&grant_type=refresh_token',
+  headers: { 
+    'Cookie': '3e285c6f31=ab4135fb07b081628e9395b1c3f85d5b; JSESSIONID=AABC15C488B9F7AD83ECE3980F378939; _zcsr_tmp=8db3b54c-50b9-442c-9dc6-fe531cf37ac4; iamcsr=8db3b54c-50b9-442c-9dc6-fe531cf37ac4'
+  }
+};
+let accessToken
+axios.request(config)
+.then((response) => {
+  //console.log(JSON.stringify(response.data));
+  
+  accessToken = response.data.access_token;
+  console.log('Access Token:', accessToken);
+  let Token ="Zoho-oauthtoken "+accessToken;
+  console.log(Token);
+  
+  
+  ///////////This is for creating record in zoho cretor//////////////
+  //const axios1 = require('axios');
+let data = JSON.stringify({
+  "data": {
+    "Credit_Checks_Done": "No",
+    "Business_Accounts_Phone_No": "8989898989",
+    "Customer_Name": "JOHN Hubspot1",
+    "Hidden_Force_Width": "",
+    "Customer_No": "1003",
+    "Customer_Status": "Active",
+    "Accounts_Notes": "<div>Testing</div>",
+    "Invoice_To": "27-Mar-2024",
+    "Reference1_FileUpload": "",
+    "Credit_Application_Form_upload": "",
+    "Business_PostalAddress_Line2": "near location",
+    "Business_PostalAddress_Line1": "stree 1",
+    "Radio_Jobs_JobType": "",
+    "Financial_Status": "New Customer",
+    "Job_Site_Hire_Branch": "13164000004786170",
+    "Business_Accounts_Email": "company@john.com",
+    "Business_Accounts_Contact_Name": "John-company",
+    "Customer_Contacts": [
+      {
+        "SiteContact_Phone_No": "98899889988"
+      }
+    ],
+    "Reference3_FileUpload": "",
+    "Decision_Do_Jobs": "false",
+    "Business_Postal_City": "delhi",
+    "Invoice_Period": "Weekly",
+    "Customer_Type": "Business",
+    "Company_Owner": "John",
+    "Invoice_From": "27-Feb-2024",
+    "Contact_Owner": "",
+    "Customer_Sites": [
+      {
+        "Street_Address": "shipra apartment",
+        "Site_City": "near shipra apartment",
+        "Site_Suburb": "suburb",
+        "SiteContact_Phone_No": "+9187877696976"
+      }
+    ],
+    "Reference2_FileUpload": "",
+    "Invoicing_Payment_Terms": "On Account",
+    "Business_PostCode": "2342",
+    "Salesperson": "13164000004808241"
+  }
+});
+
+let config1 = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://creator.zoho.com.au/api/v2/jobsitehire/copy-of-jsh/form/Add_Customer',
+  headers: { 
+    'Authorization': Token, 
+    'Content-Type': 'application/json', 
+    'Cookie': '681c8f559e=dd79e5e858f65ff7de1cb14077552c16; ZCNEWLIVEUI=true; _zcsr_tmp=ac211d17-fa3f-4d41-a306-9dcb52cac1a1; zccpn=ac211d17-fa3f-4d41-a306-9dcb52cac1a1'
+  },
+  data : data
+};
+
+axios.request(config1)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+  
+  
+  /////////////////////End of code/////////////////
+  
+  
+})
+.catch((error) => {
+  console.log(error);
+});
+  
+
+}
+module.exports.main = main;
+
